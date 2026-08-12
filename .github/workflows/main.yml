@@ -49,16 +49,9 @@ jobs:
       with:
         name: code
         path: .
-    - name: Set lowercase image name vars
-      id: vars
-      run: |
-        echo "owner_lc=${GITHUB_ACTOR,,}" >> "$GITHUB_OUTPUT"
-        echo "repo_lc=${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+    - name: ls
+      run: ls -la ci
     - name: build docker
       run: bash ci/build-docker.sh
-      env:
-        IMAGE_NAME: ${{ steps.vars.outputs.repo_lc }}
     - name: push docker
-      run: bash ci/push-docker.sh
-      env:
-        IMAGE_NAME: ${{ steps.vars.outputs.repo_lc }}
+      run: bash ci/push-docker.sh 
