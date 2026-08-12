@@ -1,20 +1,20 @@
-name: Reuseable workflow
+name: Reusable summary workflow
 
 on:
   workflow_call:
-      inputs:
-        numbers:
-          description: 'JSON array of numbers as a string'
-          type: string
-          required: true
-          default: '[1,2,3]'
-      outputs:
-        summary: 
-          description: 
-          value: ${{ jobs.summarize.outputs.summary }}
-        summary_text:
-         description: 'Human-readable summary text'
-         value: ${{ jobs.summarize.outputs.summary_text }}
+    inputs:
+      numbers:
+        description: 'JSON array of numbers as a string'
+        type: string
+        required: true
+        default: '[1,2,3]'
+    outputs:
+      summary:
+        description: 'Summary produced by the composite action (JSON)'
+        value: ${{ jobs.summarize.outputs.summary }}
+      summary_text:
+        description: 'Human-readable summary text'
+        value: ${{ jobs.summarize.outputs.summary_text }}
 
 jobs:
   summarize:
@@ -40,6 +40,3 @@ jobs:
           
           python3 ./ci/format_summary.py summary.json > summary_text.txt
           echo "summary_text=$(cat summary_text.txt)" >> $GITHUB_OUTPUT
-  
-          
-        
